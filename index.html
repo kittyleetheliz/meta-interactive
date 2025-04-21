@@ -44,6 +44,7 @@
       font-size: 12px;
       pointer-events: none;
       opacity: 0;
+      z-index: 10;
     }
 
     .legend {
@@ -76,6 +77,7 @@
       .y(d => y(d.value));
 
     const tooltip = d3.select("#tooltip");
+    const container = d3.select(".chart-container");
 
     d3.json("meta_data.json").then(data => {
       const regions = ["U.S. & Canada", "Asia Pacific", "Europe", "Rest of World"];
@@ -129,11 +131,12 @@
           .attr("r", 4)
           .attr("fill", colors(region))
           .on("mouseover", (event, d) => {
+            const [xPos, yPos] = d3.pointer(event, container.node());
             tooltip
               .style("opacity", 1)
               .html(`<strong>${region}</strong><br>Year: ${d.year}<br>Revenue: $${d.value}B`)
-              .style("left", event.pageX + 10 + "px")
-              .style("top", event.pageY - 28 + "px");
+              .style("left", `${xPos + 10}px`)
+              .style("top", `${yPos - 28}px`);
           })
           .on("mouseout", () => tooltip.style("opacity", 0));
       });
