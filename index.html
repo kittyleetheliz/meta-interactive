@@ -3,17 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Meta Revenue by Region (2014–2024)</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     body {
       font-family: sans-serif;
       margin: 40px;
+      text-align: center;
+    }
+
+    .chart-container {
+      display: inline-block;
+      position: relative;
+    }
+
+    h2 {
+      margin-bottom: 4px;
     }
 
     svg {
       background: #f9f9f9;
       border: 1px solid #ccc;
+      display: block;
+      margin: 0 auto;
     }
 
     .line {
@@ -42,8 +53,10 @@
 </head>
 <body>
   <h2>Meta Revenue by Region (2014–2024)</h2>
-  <svg width="900" height="500"></svg>
-  <div id="tooltip" class="tooltip"></div>
+  <div class="chart-container">
+    <svg width="900" height="500"></svg>
+    <div id="tooltip" class="tooltip"></div>
+  </div>
 
   <script>
     const svg = d3.select("svg"),
@@ -81,6 +94,7 @@
 
       // Lines and circles
       regions.forEach(region => {
+        const classSafe = region.replace(/[^a-zA-Z0-9]/g, '');
         const regionData = data.map(d => ({ year: d.year, value: d[region] }));
 
         const path = svg.append("path")
@@ -106,12 +120,10 @@
           .attr("stroke-dashoffset", 0);
 
         // Circles and tooltips
-        const sanitizedRegion = region.replace(/[^a-zA-Z0-9]/g, '_'); // Replace invalid characters with underscores
-
-        svg.selectAll(`.dot-${sanitizedRegion}`)
+        svg.selectAll(`.dot-${classSafe}`)
           .data(regionData)
           .enter().append("circle")
-          .attr("class", `dot dot-${sanitizedRegion}`) // Use sanitized class name
+          .attr("class", `dot dot-${classSafe}`)
           .attr("cx", d => x(d.year))
           .attr("cy", d => y(d.value))
           .attr("r", 4)
