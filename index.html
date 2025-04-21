@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meta Revenue by Region (2014–2024)</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px;
+    }
+
+    svg {
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+    }
+
+    .line {
+      fill: none;
+      stroke-width: 2px;
+    }
+
+    .dot {
+      cursor: pointer;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .legend {
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Meta Revenue by Region (2014–2024)</h2>
+  <svg width="900" height="500"></svg>
+  <div id="tooltip" class="tooltip"></div>
+
+  <script>
+    const svg = d3.select("svg"),
+          width = +svg.attr("width") - 100,
+          height = +svg.attr("height") - 60,
+          margin = { top: 20, right: 150, bottom: 30, left: 50 };
+
+    const colors = d3.scaleOrdinal()
+      .domain(["U.S. & Canada", "Asia Pacific", "Europe", "Rest of World"])
+      .range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]);
+
+    const x = d3.scaleLinear().range([margin.left, width]);
+    const y = d3.scaleLinear().range([height, margin.top]);
+
+    const line = d3.line()
+      .x(d => x(d.year))
+      .y(d => y(d.value));
+
+    const tooltip = d3.select("#tooltip");
+
+    d3.json("meta_data.json").then(data => {
+      const regions = ["U.S. & Canada", "Asia Pacific", "Europe", "Rest of World"];
+
+      x.domain(d3.extent(data, d => d.year));
+      y.domain([0, d3.max(data, d => d3.max(regions, r => d[r]))]).nice();
+
+      // Axes
+      svg.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x).tickFormat(d3.format("d")));
+
+      svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y));
+
+      // Lines and circles
+      regions.forEach(region => {
+        const regionData = data.map(d => ({ year: d.year, value: d[region] }));
+
+        const path = svg.append("path")
+          .datum(regionData)
+          .attr("class", "line")
+          .attr("stroke", colors(region))
+          .attr("d", line)
+          .on("mouseover", function () {
+            d3.selectAll(".line").style("opacity", 0.1);
+            d3.select(this).style("opacity", 1).style("stroke-width", 4);
+          })
+          .on("mouseout", function () {
+            d3.selectAll(".line").style("opacity", 1).style("stroke-width", 2);
+          });
+
+        // Animate line drawing
+        const length = path.node().getTotalLength();
+        path
+          .attr("stroke-dasharray", length + " " + length)
+          .attr("stroke-dashoffset", length)
+          .transition()
+          .duration(2000)
+          .attr("stroke-dashoffset", 0);
+
+        // Circles and tooltips
+        const sanitizedRegion = region.replace(/[^a-zA-Z0-9]/g, '_'); // Replace invalid characters with underscores
+
+        svg.selectAll(`.dot-${sanitizedRegion}`)
+          .data(regionData)
+          .enter().append("circle")
+          .attr("class", `dot dot-${sanitizedRegion}`) // Use sanitized class name
+          .attr("cx", d => x(d.year))
+          .attr("cy", d => y(d.value))
+          .attr("r", 4)
+          .attr("fill", colors(region))
+          .on("mouseover", (event, d) => {
+            tooltip
+              .style("opacity", 1)
+              .html(`<strong>${region}</strong><br>Year: ${d.year}<br>Revenue: $${d.value}B`)
+              .style("left", event.pageX + 10 + "px")
+              .style("top", event.pageY - 28 + "px");
+          })
+          .on("mouseout", () => tooltip.style("opacity", 0));
+      });
+
+      // Legend
+      svg.selectAll(".legend")
+        .data(regions)
+        .enter().append("text")
+        .attr("x", width + 20)
+        .attr("y", (d, i) => margin.top + i * 20)
+        .attr("fill", d => colors(d))
+        .attr("class", "legend")
+        .text(d => d);
+    });
+  </script>
+</body>
+</html>
