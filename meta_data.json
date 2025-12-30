@@ -1,14 +1,14 @@
 [
-    { "year": 2014, "U.S. & Canada": 8.0, "Asia Pacific": 2.5, "Europe": 2.0, "Rest of World": 1.5 },
-    { "year": 2015, "U.S. & Canada": 10.0, "Asia Pacific": 3.0, "Europe": 2.5, "Rest of World": 2.0 },
-    { "year": 2016, "U.S. & Canada": 13.0, "Asia Pacific": 4.5, "Europe": 3.5, "Rest of World": 2.5 },
-    { "year": 2017, "U.S. & Canada": 17.0, "Asia Pacific": 6.0, "Europe": 4.5, "Rest of World": 3.0 },
-    { "year": 2018, "U.S. & Canada": 22.0, "Asia Pacific": 8.0, "Europe": 6.0, "Rest of World": 4.0 },
-    { "year": 2019, "U.S. & Canada": 27.0, "Asia Pacific": 10.0, "Europe": 7.5, "Rest of World": 5.0 },
-    { "year": 2020, "U.S. & Canada": 34.0, "Asia Pacific": 13.0, "Europe": 9.0, "Rest of World": 6.0 },
-    { "year": 2021, "U.S. & Canada": 42.0, "Asia Pacific": 16.0, "Europe": 11.0, "Rest of World": 7.0 },
-    { "year": 2022, "U.S. & Canada": 50.0, "Asia Pacific": 20.0, "Europe": 15.0, "Rest of World": 10.0 },
-    { "year": 2023, "U.S. & Canada": 55.0, "Asia Pacific": 25.0, "Europe": 18.0, "Rest of World": 12.0 },
-    { "year": 2024, "U.S. & Canada": 60.0, "Asia Pacific": 30.0, "Europe": 20.0, "Rest of World": 15.0 }
-  ]
-  
+  {"year": 2014, "U.S. & Canada": 6.38, "Asia Pacific": 1.76, "Europe": 3.44, "Rest of World": 1.48},
+  {"year": 2015, "U.S. & Canada": 9.24, "Asia Pacific": 2.65, "Europe": 4.9, "Rest of World": 2.06},
+  {"year": 2016, "U.S. & Canada": 13.91, "Asia Pacific": 4.14, "Europe": 7.15, "Rest of World": 3.01},
+  {"year": 2017, "U.S. & Canada": 19.34, "Asia Pacific": 7.02, "Europe": 9.68, "Rest of World": 4.41},
+  {"year": 2018, "U.S. & Canada": 23.49, "Asia Pacific": 9.53, "Europe": 11.39, "Rest of World": 5.48},
+  {"year": 2019, "U.S. & Canada": 27.26, "Asia Pacific": 11.88, "Europe": 12.01, "Rest of World": 6.55},
+  {"year": 2020, "U.S. & Canada": 32.55, "Asia Pacific": 14.88, "Europe": 13.78, "Rest of World": 8.04},
+  {"year": 2021, "U.S. & Canada": 56.63, "Asia Pacific": 26.74, "Europe": 31.21, "Rest of World": 14.65},
+  {"year": 2022, "U.S. & Canada": 52.89, "Asia Pacific": 27.76, "Europe": 31.21, "Rest of World": 14.65},
+  {"year": 2023, "U.S. & Canada": 52.89, "Asia Pacific": 36.15, "Europe": 31.21, "Rest of World": 14.65},
+  {"year": 2024, "U.S. & Canada": 63.21, "Asia Pacific": 45.01, "Europe": 38.36, "Rest of World": 17.92},
+  {"year": 2025, "U.S. & Canada": 68.00, "Asia Pacific": 54.00, "Europe": 42.50, "Rest of World": 24.50}
+]
